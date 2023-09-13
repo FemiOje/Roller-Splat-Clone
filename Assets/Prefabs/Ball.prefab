@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 411997410058672893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3, y: 0.5, z: -3}
-  m_LocalScale: {x: 0.99, y: 0.99, z: 0.99}
+  m_LocalScale: {x: 0.9637452, y: 0.9637452, z: 0.9637452}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -119,7 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535c10a425830824b873e0e99d4a261f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSwipeDistance: 50
+  isTraveling: 0
+  solveColor: {r: 0, g: 0, b: 0, a: 0}
   speed: 25
 --- !u!54 &4909100842910124121
 Rigidbody:
@@ -147,4 +148,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1

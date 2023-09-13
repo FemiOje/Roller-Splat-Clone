@@ -22,6 +22,7 @@ public class GroundUnitController : MonoBehaviour
         {
             hasMadeContact = true;
             SetColor(ballControllerScript.solveColor);
+            GameManager.singleton.CheckIfComplete();
         }
     }
 }
