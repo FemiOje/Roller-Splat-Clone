@@ -6,9 +6,14 @@ public class BallController : MonoBehaviour
 {
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
+    //private Vector2 swipePosLastFrame;
+    //private Vector2 swipePosCurrentFrame;
+    //private Vector2 currentSwipe;
     private bool isSwiping = false;
+    [SerializeField] private bool isTraveling;
+    public Color solveColor;
 
-    [SerializeField] private float minSwipeDistance = 50f; // Minimum distance for a swipe to register
+    private float minSwipeDistance = 50f; // Minimum distance for a swipe to register
 
 
     Rigidbody ballRb;
@@ -17,40 +22,45 @@ public class BallController : MonoBehaviour
     void Start()
     {
         ballRb = GetComponent<Rigidbody>();
+        solveColor = Random.ColorHSV(0.5f, 1f);
+        GetComponent<Renderer>().material.color = solveColor;
     }
 
     private void Update()
     {
-        // Check for touch or mouse input
-        if (Input.GetMouseButtonDown(0))
+        if (!isTraveling)
         {
-            touchStartPos = Input.mousePosition;
-            isSwiping = true;
-        }
+            // Check for touch or mouse input when ball is not travelling
+            if (Input.GetMouseButtonDown(0))
+            {
+                touchStartPos = Input.mousePosition;
+                isSwiping = true;
+            }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            touchEndPos = Input.mousePosition;
-            isSwiping = false;
+            if (Input.GetMouseButtonUp(0))
+            {
+                touchEndPos = Input.mousePosition;
+                isSwiping = false;
 
-            DetectSwipe();
-        }
+                DetectSwipe();
+            }
 
-        // Check for touch drag (optional)
-        if (isSwiping)
-        {
-            // You can add additional code here for handling drag while swiping.
         }
     }
 
-    void FixedUpdate()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        string checkTag = collision.gameObject.tag;
+        Debug.Log($"Collision detected: {checkTag}");
+        if (checkTag == "Wall" || checkTag == "Obstacle")
+        {
+            isTraveling = false;
+            ballRb.velocity = Vector3.zero;
+        }
     }
 
 
-
-
+    //swipe detection
     void DetectSwipe()
     {
         float swipeDistance = Vector2.Distance(touchStartPos, touchEndPos);
@@ -67,14 +77,12 @@ public class BallController : MonoBehaviour
                 if (swipeDirection.x > 0)
                 {
                     Debug.Log("Right Swipe");
-                    // Add your right swipe logic here.
-                    ballRb.velocity = speed * Vector3.right;
+                    MoveBall(Vector3.right);
                 }
                 else
                 {
                     Debug.Log("Left Swipe");
-                    // Add your left swipe logic here.
-                    ballRb.velocity = speed * Vector3.left;
+                    MoveBall(Vector3.left);
                 }
             }
             else
@@ -83,16 +91,20 @@ public class BallController : MonoBehaviour
                 if (swipeDirection.y > 0)
                 {
                     Debug.Log("Up Swipe");
-                    // Add your up swipe logic here.
-                    ballRb.velocity = speed * Vector3.forward;
+                    MoveBall(Vector3.forward);
                 }
                 else
                 {
                     Debug.Log("Down Swipe");
-                    // Add your down swipe logic here.
-                    ballRb.velocity = speed * Vector3.back;
+                    MoveBall(Vector3.back);
                 }
             }
         }
+    }
+
+    void MoveBall(Vector3 direction)
+    {
+        isTraveling = true;
+        ballRb.velocity = speed * direction;
     }
 }

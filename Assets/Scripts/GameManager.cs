@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
         SetupNewScene();
     }
 
+    private void Update()
+    {
+        
+    }
     private void SetupNewScene()
     {
         allGroundUnits = FindObjectsOfType<GroundUnitController>();
