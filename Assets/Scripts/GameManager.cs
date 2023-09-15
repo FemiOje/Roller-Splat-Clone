@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
     private GroundUnitController[] allGroundUnits;
-    public string lastLevelName = "Level5";
 
 
     private void Awake()
@@ -27,12 +27,11 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        SetupNewLevel();
-    }
-
-    private void Update()
-    {
-
+        //set up new level for scenes other than main menu
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        {
+            SetupNewLevel();
+        }
     }
 
     private void OnEnable()
@@ -41,11 +40,16 @@ public class GameManager : MonoBehaviour
     }
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        SetupNewLevel();
+        //cache the ground tiles, if we're not in the main menu
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        {
+            SetupNewLevel();
+        }
     }
     private void SetupNewLevel()
     {
         allGroundUnits = FindObjectsOfType<GroundUnitController>();
+        Time.timeScale = 1;
     }
 
     public void CheckIfComplete()
@@ -69,8 +73,9 @@ public class GameManager : MonoBehaviour
 
     private void GoToNextLevel()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 4)
+        if (SceneManager.GetActiveScene().buildIndex == 5)
         {
+            //handle completion particle system
             Debug.Log("You have reached the end of the game");
         }
         else

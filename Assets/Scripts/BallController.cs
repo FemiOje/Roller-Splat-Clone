@@ -28,8 +28,8 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
-        if (!isTraveling)
-        {
+        //if (!isTraveling)
+        //{
             // Check for touch or mouse input when ball is not travelling
             if (Input.GetMouseButtonDown(0))
             {
@@ -45,7 +45,7 @@ public class BallController : MonoBehaviour
                 DetectSwipe();
             }
 
-        }
+        //}
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -54,8 +54,8 @@ public class BallController : MonoBehaviour
         Debug.Log($"Collision detected: {checkTag}");
         if (checkTag == "Wall" || checkTag == "Obstacle")
         {
-            isTraveling = false;
-            ballRb.velocity = Vector3.zero;
+            //isTraveling = false;
+           // ballRb.velocity = Vector3.zero;
         }
     }
 
@@ -104,7 +104,7 @@ public class BallController : MonoBehaviour
 
     void MoveBall(Vector3 direction)
     {
-        isTraveling = true;
+        //isTraveling = true;
         ballRb.velocity = speed * direction;
     }
 }

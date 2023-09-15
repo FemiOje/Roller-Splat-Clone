@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTraveling: 0
   solveColor: {r: 0, g: 0, b: 0, a: 0}
-  speed: 25
+  speed: 40
 --- !u!54 &4909100842910124121
 Rigidbody:
   m_ObjectHideFlags: 0
