@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
     private GroundUnitController[] allGroundUnits;
-
+    public ParticleSystem[] winParticleSystem;
 
     private void Awake()
     {
@@ -25,14 +25,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
-    {
-        //set up new level for scenes other than main menu
-        if (SceneManager.GetActiveScene().buildIndex > 0)
-        {
-            SetupNewLevel();
-        }
-    }
 
     private void OnEnable()
     {
@@ -46,10 +38,13 @@ public class GameManager : MonoBehaviour
             SetupNewLevel();
         }
     }
-    private void SetupNewLevel()
+    private void SetupNewLevel() // this runs about four times at once
     {
         allGroundUnits = FindObjectsOfType<GroundUnitController>();
         Time.timeScale = 1;
+
+        winParticleSystem = FindObjectsOfType<ParticleSystem>();
+        Debug.Log(winParticleSystem.Length);
     }
 
     public void CheckIfComplete()
@@ -67,16 +62,24 @@ public class GameManager : MonoBehaviour
 
         if (isComplete)
         {
-            GoToNextLevel();
+            StartCoroutine(PlayWinParticleAndLoadNextLevel());
         }
     }
 
-    private void GoToNextLevel()
+    private IEnumerator PlayWinParticleAndLoadNextLevel()
     {
+        for (int i=0; i < winParticleSystem.Length; i++)
+        {
+            winParticleSystem[i].Play();
+
+        }
+
+        yield return new WaitForSeconds(3);
         if (SceneManager.GetActiveScene().buildIndex == 6)
         {
             //handle completion particle system
             Debug.Log("You have reached the end of the game");
+            Time.timeScale = 0;
         }
         else
         {

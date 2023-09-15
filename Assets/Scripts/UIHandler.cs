@@ -5,18 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 public class UIHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void GoToLevel(int levelIndex)
     {
         SceneManager.LoadScene(levelIndex);
@@ -32,7 +20,7 @@ public class UIHandler : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void ExitGame()
+    public void ExitGame()   //confirm that thhis works in a built app
     {
 #if UNITY_EDITOR
         // In the Unity Editor, stop play mode

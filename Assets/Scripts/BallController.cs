@@ -6,15 +6,10 @@ public class BallController : MonoBehaviour
 {
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
-    //private Vector2 swipePosLastFrame;
-    //private Vector2 swipePosCurrentFrame;
-    //private Vector2 currentSwipe;
-    private bool isSwiping = false;
     [SerializeField] private bool isTraveling;
     public Color solveColor;
 
     private float minSwipeDistance = 50f; // Minimum distance for a swipe to register
-
 
     Rigidbody ballRb;
     [SerializeField] float speed;
@@ -28,37 +23,19 @@ public class BallController : MonoBehaviour
 
     private void Update()
     {
-        //if (!isTraveling)
-        //{
-            // Check for touch or mouse input when ball is not travelling
-            if (Input.GetMouseButtonDown(0))
-            {
-                touchStartPos = Input.mousePosition;
-                isSwiping = true;
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                touchEndPos = Input.mousePosition;
-                isSwiping = false;
-
-                DetectSwipe();
-            }
-
-        //}
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        string checkTag = collision.gameObject.tag;
-        Debug.Log($"Collision detected: {checkTag}");
-        if (checkTag == "Wall" || checkTag == "Obstacle")
+        // Check for touch or mouse input
+        if (Input.GetMouseButtonDown(0))
         {
-            //isTraveling = false;
-           // ballRb.velocity = Vector3.zero;
+            touchStartPos = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            touchEndPos = Input.mousePosition;
+
+            DetectSwipe();
         }
     }
-
 
     //swipe detection
     void DetectSwipe()
@@ -104,7 +81,6 @@ public class BallController : MonoBehaviour
 
     void MoveBall(Vector3 direction)
     {
-        //isTraveling = true;
         ballRb.velocity = speed * direction;
     }
 }
