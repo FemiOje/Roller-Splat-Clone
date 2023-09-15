@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     private void GoToNextLevel()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 5)
+        if (SceneManager.GetActiveScene().buildIndex == 6)
         {
             //handle completion particle system
             Debug.Log("You have reached the end of the game");
