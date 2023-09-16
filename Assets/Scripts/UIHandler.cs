@@ -5,11 +5,17 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 public class UIHandler : MonoBehaviour
 {
+    public AudioSource buttonSound;
+    public AudioClip buttonClip;
     public void GoToLevel(int levelIndex)
     {
         SceneManager.LoadScene(levelIndex);
     }
 
+    public void PlayButtonSound()
+    {
+        buttonSound.PlayOneShot(buttonClip);
+    }
     public void PauseGame()
     {
         Time.timeScale = 0;

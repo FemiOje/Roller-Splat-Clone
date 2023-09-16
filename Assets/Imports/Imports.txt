@@ -1,2 +1,3 @@
 Spark particle from Unity Technologies
-8-bit music by GWriterStudio https://assetstore.unity.com/packages/audio/music/8bit-music-062022-225623
+8-bit background and pause menu music by GWriterStudio (https://assetstore.unity.com/packages/audio/music/8bit-music-062022-225623)
+Free Casual SoundFX Pack(for button clicks) by Tim Beek (https://assetstore.unity.com/publishers/25871)

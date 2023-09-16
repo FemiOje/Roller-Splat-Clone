@@ -26,29 +26,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void OnEnable() //doesnt run on every load
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        Debug.Log("OnEnable runs once");
     }
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         //cache the ground tiles, if we're not in the main menu
-        if (SceneManager.GetActiveScene().buildIndex > 0)
-        {
+        //if (SceneManager.GetActiveScene().buildIndex > 0)
+        //{
             SetupNewLevel();
-        }
+        //}
     }
     private void SetupNewLevel() // this runs about four times at once
     {
         allGroundUnits = FindObjectsOfType<GroundUnitController>();
-        Time.timeScale = 1;
-
         winParticleSystem = FindObjectsOfType<ParticleSystem>();
+        Time.timeScale = 1;
         Debug.Log(winParticleSystem.Length);
     }
 
+
     public void CheckIfComplete()
     {
+        Debug.Log("Checking if complete");
         bool isComplete = true;
 
         for (int i = 0; i < allGroundUnits.Length; i++)
@@ -71,10 +73,10 @@ public class GameManager : MonoBehaviour
         for (int i=0; i < winParticleSystem.Length; i++)
         {
             winParticleSystem[i].Play();
-
         }
 
         yield return new WaitForSeconds(3);
+
         if (SceneManager.GetActiveScene().buildIndex == 6)
         {
             //handle completion particle system
