@@ -29,15 +29,21 @@ public class GameManager : MonoBehaviour
     private void OnEnable() //doesnt run on every load
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
-        Debug.Log("OnEnable runs once");
+        Debug.Log("OnEnable ran");
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        Debug.Log("OnDisable ran");
     }
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         //cache the ground tiles, if we're not in the main menu
-        //if (SceneManager.GetActiveScene().buildIndex > 0)
-        //{
+        if (SceneManager.GetActiveScene().buildIndex > 0)
+        {
             SetupNewLevel();
-        //}
+        }
     }
     private void SetupNewLevel() // this runs about four times at once
     {
@@ -64,18 +70,17 @@ public class GameManager : MonoBehaviour
 
         if (isComplete)
         {
-            StartCoroutine(PlayWinParticleAndLoadNextLevel());
+            PlayWinParticleAndLoadNextLevel();
         }
     }
 
-    private IEnumerator PlayWinParticleAndLoadNextLevel()
+    private void PlayWinParticleAndLoadNextLevel()
     {
         for (int i=0; i < winParticleSystem.Length; i++)
         {
             winParticleSystem[i].Play();
         }
 
-        yield return new WaitForSeconds(3);
 
         if (SceneManager.GetActiveScene().buildIndex == 6)
         {
