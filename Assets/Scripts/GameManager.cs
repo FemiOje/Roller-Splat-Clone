@@ -8,9 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager singleton;
     private GroundUnitController[] allGroundUnits;
     public ParticleSystem[] winParticleSystem;
-
+    private int finalSceneBuildIndex = 7;
     private bool isCompleting = false; // Added flag to prevent multiple calls
-
     private void Awake()
     {
         // Check if an instance of GameManager already exists
@@ -30,7 +29,6 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
-        Debug.Log("OnEnable runs once");
     }
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
@@ -47,12 +45,10 @@ public class GameManager : MonoBehaviour
         allGroundUnits = FindObjectsOfType<GroundUnitController>();
         winParticleSystem = FindObjectsOfType<ParticleSystem>();
         Time.timeScale = 1;
-        Debug.Log(winParticleSystem.Length);
     }
 
     public void CheckIfComplete()
     {
-        Debug.Log("Checking if complete");
         bool isComplete = true;
 
         for (int i = 0; i < allGroundUnits.Length; i++)
@@ -82,10 +78,8 @@ public class GameManager : MonoBehaviour
         // Wait for 2 seconds
         yield return new WaitForSeconds(2);
 
-        if (SceneManager.GetActiveScene().buildIndex == 6)
+        if (SceneManager.GetActiveScene().buildIndex == finalSceneBuildIndex)
         {
-            // Handle completion particle system
-            Debug.Log("You have reached the end of the game");
             Time.timeScale = 0;
         }
         else
